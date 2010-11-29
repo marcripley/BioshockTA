@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>show_enemies (Rapture)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/rapture.rb, line 89</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">show_enemies</span>
+    <span class="ruby-identifier">chance</span> = <span class="ruby-identifier">find_room_in_rapture</span>(<span class="ruby-ivar">@player</span>.<span class="ruby-identifier">location</span>).<span class="ruby-identifier">enemies</span>
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">chance</span> <span class="ruby-operator">==</span> <span class="ruby-value">10</span>
+      <span class="ruby-ivar">@enemy</span> = <span class="ruby-constant">Enemy</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;Leadheaded Splicer&quot;</span>, <span class="ruby-value">100</span>, <span class="ruby-identifier">rand</span>(<span class="ruby-value">10</span>), <span class="ruby-identifier">:tk</span>, <span class="ruby-identifier">:shock</span>)
+      <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;There is a &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@enemy</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; in the room! It's seen you! It runs straight for you...&quot;</span>
+      <span class="ruby-identifier">fight_choice</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

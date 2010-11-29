@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>instruct (Rapture)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/rapture.rb, line 37</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">instruct</span>(<span class="ruby-identifier">instruction</span>)
+    <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;What?&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">instruction</span> <span class="ruby-operator">==</span> <span class="ruby-value str">''</span>
+    <span class="ruby-ivar">@action</span> = <span class="ruby-keyword kw">nil</span>
+    <span class="ruby-identifier">instruction_split</span> = <span class="ruby-identifier">instruction</span>.<span class="ruby-identifier">downcase</span>.<span class="ruby-identifier">split</span>
+    <span class="ruby-comment cmt"># If one word, check for method or ask to specify</span>
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">instruction_split</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+      <span class="ruby-ivar">@action</span> = <span class="ruby-identifier">instruction_split</span>[<span class="ruby-value">0</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">respond_to?</span><span class="ruby-identifier">instruction_split</span>[<span class="ruby-value">0</span>]
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-comment cmt"># Loop through string adding words till you find an existing method,</span>
+      <span class="ruby-comment cmt"># then assign the action and choice from the split strings</span>
+      <span class="ruby-value">0</span>.<span class="ruby-identifier">upto</span>(<span class="ruby-identifier">instruction_split</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">n</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">respond_to?</span><span class="ruby-identifier">instruction_split</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-identifier">n</span>].<span class="ruby-identifier">join</span>(<span class="ruby-value str">'_'</span>)
+          <span class="ruby-ivar">@action</span> = <span class="ruby-identifier">instruction_split</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-identifier">n</span>].<span class="ruby-identifier">join</span>(<span class="ruby-value str">'_'</span>)
+          <span class="ruby-ivar">@choice</span> = <span class="ruby-identifier">instruction_split</span>[(<span class="ruby-identifier">n</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>)<span class="ruby-operator">..</span><span class="ruby-identifier">instruction_split</span>.<span class="ruby-identifier">size</span>].<span class="ruby-identifier">join</span>(<span class="ruby-value str">'_'</span>).<span class="ruby-identifier">to_sym</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@action</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">send</span> <span class="ruby-ivar">@action</span>, <span class="ruby-ivar">@choice</span>
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;You can't &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">instruction</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">instruction</span> <span class="ruby-operator">!=</span> <span class="ruby-value str">''</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

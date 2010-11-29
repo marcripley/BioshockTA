@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>battle (Rapture)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/rapture.rb, line 169</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">battle</span>(<span class="ruby-identifier">weapon</span>)
+    <span class="ruby-identifier">weapon</span> = <span class="ruby-identifier">:wrench</span>
+    <span class="ruby-identifier">damage_to_enemy</span> = <span class="ruby-identifier">rand</span>(<span class="ruby-value">15</span>) <span class="ruby-operator">+</span> <span class="ruby-value">15</span>
+    <span class="ruby-identifier">damage_to_player</span> = <span class="ruby-ivar">@enemy</span>.<span class="ruby-identifier">power</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">rand</span>(<span class="ruby-value">10</span>) <span class="ruby-operator">+</span> <span class="ruby-value">5</span>
+    <span class="ruby-ivar">@enemy</span>.<span class="ruby-identifier">health</span> <span class="ruby-operator">-=</span> <span class="ruby-identifier">damage_to_enemy</span>
+    <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;You did &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">damage_to_enemy</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; damage to the &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@enemy</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;!&quot;</span>
+    <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@enemy</span>.<span class="ruby-identifier">health</span> <span class="ruby-operator">&gt;</span><span class="ruby-value">0</span>
+      <span class="ruby-ivar">@player</span>.<span class="ruby-identifier">health</span> <span class="ruby-operator">-=</span> <span class="ruby-identifier">damage_to_player</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;The &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@enemy</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; hits you with a pipe and inlicts &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">damage_to_player</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; damage on you.&quot;</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;You now have &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@player</span>.<span class="ruby-identifier">health</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; health left.&quot;</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>
