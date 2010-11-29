@@ -26,7 +26,7 @@ class Rapture
   end
 
   # Starts the beginning of the game
-  def start(location)
+  def start_game(location)
     puts "Welcome to Rapture, " + @player.name + ".\n\n"
     @player.location = location
     show_current_description
@@ -38,7 +38,7 @@ class Rapture
     @action = nil
     
     # Translate action shortcuts, format and split
-    shortcuts = {"n" => "go north", "w" => "go west", "e" => "go east", "s" => "go south"}
+    shortcuts = {"n" => "go north", "w" => "go west", "e" => "go east", "s" => "go south", "l" => "look"}
     instruction = shortcuts.include?(instruction) ? shortcuts[instruction] : instruction
     instruction_split = instruction.downcase.split
 
@@ -82,6 +82,11 @@ class Rapture
     return room
   end
 
+  # List exits in the current room
+  def show_current_exits
+    puts find_room_in_rapture(@player.location).list_exits
+  end
+
   # List current items in room
   def show_current_items
     puts find_room_in_rapture(@player.location).list_items
@@ -119,9 +124,13 @@ class Rapture
   end
 
   # List items in the current room
-  def look
-    p "this"
-    show_current_items
+  def look(object)
+    if object == :eve_hypo
+      puts "There's a syringe that contains a glowing blue plasma..."
+    else
+      show_current_items
+      show_current_exits
+    end
   end
 
   # List player's current inventory

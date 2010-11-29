@@ -39,6 +39,13 @@
       items_message = @items.size == 0 ? "This room is empty." : "You see a " + @items.join(joiner).gsub('_', ' ') + "."
       return items_message
     end
+
+    # List items in current room, formatted for easy reading
+    def list_exits
+      joiner = @connections.size > 1 ? ' and ' : ' '
+      exits_message = "There are exits to the " + @connections.keys.join(joiner) + "."
+      return exits_message
+    end
   end
 
   class Enemy

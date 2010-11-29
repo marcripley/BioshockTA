@@ -9,7 +9,7 @@ require "rooms"
 require "enemies"
 
 # Start the game by placing player in the Entryway
-@rapture.start(:entryway)
+@rapture.start_game(:entryway)
 
 # initial instructions for debugging
 #@rapture.instruct("pick up wrench")
