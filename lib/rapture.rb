@@ -35,10 +35,16 @@ class Rapture
 
   # Process the player's instruction string, finding matching methods and sending the method call
   def instruct(instruction)
-    puts "What?" if instruction == ''
     @action = nil
+    
+    # Translate action shortcuts, format and split
+    shortcuts = {"n" => "go north", "w" => "go west", "e" => "go east", "s" => "go south"}
+    instruction = shortcuts.include?(instruction) ? shortcuts[instruction] : instruction
     instruction_split = instruction.downcase.split
-    # If one word, check for method or ask to specify
+
+    # If no word, ask what?, one word, check for method or ask to specify
+    # if multi-word, search for method and process
+    puts "What?" if instruction == ''
     if instruction_split.size == 1
       @action = instruction_split[0] if self.respond_to?instruction_split[0]
     else
@@ -59,6 +65,7 @@ class Rapture
     end
   end
 
+  #==Helper Methods
   # These are helper methods to aid action methods
   #
   def show_current_description
@@ -95,7 +102,7 @@ class Rapture
     end
   end
 
-  #==Action methods
+  #==Action Methods
   #
   # This defines all movement with error handling
   def go(direction)
@@ -112,12 +119,14 @@ class Rapture
   end
 
   # List items in the current room
-  def look_around(around)
+  def look
+    p "this"
     show_current_items
   end
 
   # List player's current inventory
-  def inventory(this)
+  def inventory
+    p "this"
     puts @player.list_inventory
   end
 
@@ -137,7 +146,7 @@ class Rapture
     end
   end
 
-  #==Fight methods
+  #==Fight Methods
   #
   # Fight or run
   def fight_choice
@@ -176,6 +185,22 @@ class Rapture
       @player.health -= damage_to_player
       puts "The " + @enemy.name + " hits you with a pipe and inlicts " + damage_to_player.to_s + " damage on you."
       puts "You now have " + @player.health.to_s + " health left."
+    end
+  end
+
+  # Check for room connections and go to the 'previous' room, or lower in the rooms array connected to current
+  def run_away
+    current_room = find_room_in_rapture(@player.location)
+    room_number = @rooms.index(current_room)
+    connected = false
+    until connected
+      prev_room = @rooms[room_number - 1].reference
+      connected = current_room.connections.value?(prev_room)
+      if connected
+        direction = current_room.connections.index(prev_room)
+        go(direction)
+      end
+      room_number -= 1
     end
   end
 end

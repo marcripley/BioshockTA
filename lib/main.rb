@@ -11,6 +11,10 @@ require "enemies"
 # Start the game by placing player in the Entryway
 @rapture.start(:entryway)
 
+# initial instructions for debugging
+#@rapture.instruct("pick up wrench")
+#@rapture.instruct("w")
+
 # Get instructions
 input = ''
 until input == "end"
