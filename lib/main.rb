@@ -15,5 +15,9 @@ require "enemies"
 input = ''
 until input == "end"
   input = gets.chomp
-  @rapture.instruct(input) if input != "end"
+  begin
+    @rapture.instruct(input) if input != "end"
+  rescue
+    puts "Whatever you typed isn't working. Try again!"
+  end
 end
