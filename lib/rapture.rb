@@ -12,7 +12,7 @@ class Rapture
     @rooms = []
     @enemies = []
     @weapons = []
-    @weapons_list = [:wrench, :pistol, :shotgun]
+    @weapons_list = {:wrench => 15, :pistol => 40, :shotgun => 60}
   end
 
   # Method to add rooms
@@ -89,7 +89,7 @@ class Rapture
   def show_enemies
     chance = find_room_in_rapture(@player.location).enemies
     if chance == 10
-      @enemy = Enemy.new("Leadheaded Splicer", 100, rand(10), :tk, :shock)
+      @enemy = Enemy.new("Leadheaded Splicer", 100, 15, :tk, :shock)
       puts "There is a " + @enemy.name + " in the room! It's seen you! It runs straight for you..."
       fight_choice
     end
@@ -152,24 +152,32 @@ class Rapture
       run_away
     else
       puts "You have to do something!"
+      fight_choice
     end
   end
 
   # Choose weapon
   def fight_enemy
     puts "Choose your weapon"
+    # Search through and list available player weapons
     @weapons = @player.weapons
     1.upto(@weapons.size) {|n| puts n.to_s + " - " + @weapons[n-1].to_s}
     puts (@weapons.size + 1).to_s + " - Screw this, just run"
-    weapon_input = gets.chomp
-    battle(weapon_input)
+    weapon_input = gets.chomp.to_i
+    # Weapon choice currently must be a number
+    weapon_choice = @weapons[weapon_input - 1]
+    battle(weapon_choice)
   end
   
   # Fight the enemy
   def battle(weapon)
-    weapon = :wrench
-    damage_to_enemy = rand(15) + 15
-    damage_to_player = @enemy.power + rand(10) + 5
+    weapon_power = @weapons_list[weapon]
+    # Determine damage to enemy
+    # First number is from weapons_list (Rapture initialization), second number depends on player difficulty (currently set in main.rb)
+    damage_to_enemy = rand(weapon_power) + (40 - (4 * @player.difficulty))
+    # Determine damage to player (only inflicted if enemy is not dead)
+    # Enemy power depends on type, plus twice the player's difficulty (1-10)
+    damage_to_player = rand(@enemy.power) + @player.difficulty
     @enemy.health -= damage_to_enemy
     puts "You did " + damage_to_enemy.to_s + " damage to the " + @enemy.name + "!"
     if @enemy.health >0

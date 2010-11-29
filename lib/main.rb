@@ -1,7 +1,7 @@
 # Gameplay
 require "rapture"
 
-# Player and room initialization
+# Player initialization
 @rapture = Rapture.new("Bio Ripley", 6)
 
 # Require and initialize rooms
